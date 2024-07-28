@@ -140,8 +140,14 @@ if prompt := st.chat_input(
     st.session_state.messages.append({"role": "user", "content": prompt})
 
 for message in st.session_state.messages:  # Write message history to UI
-    with st.chat_message(message["role"]):
-        st.write(message["content"])
+
+    if message["role"]=="assistant":
+        with st.chat_message(message["role"], avatar='https://raw.githubusercontent.com/chrisahn99/re-Connect/feat/adapt_model/assets/ReConnect_avatar.jpg'):
+            st.write(message["content"])
+
+    else:
+        with st.chat_message(message["role"]):
+            st.write(message["content"])
 
 # If last message is not from assistant, generate a new response
 if st.session_state.messages[-1]["role"] != "assistant":
