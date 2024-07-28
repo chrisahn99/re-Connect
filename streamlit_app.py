@@ -13,34 +13,6 @@ st.set_page_config(
 st.title("re:Connect, next gen AI therapist⚕️")
 st.info("Check out the full presentation pf this app in our [hackathon page](https://lablab.ai/event/llama-3-ai-hackathon/mirai/reconnect)", icon="📃")
 
-# Add custom CSS for styling
-st.markdown(
-    """
-    <style>
-    .main {
-        background-color: #f8f9fa;
-    }
-    .sidebar .sidebar-content {
-        background-color: #D91320;
-    }
-    .stButton>button {
-        color: #FFFFFF;
-        background-color: #D91320;
-    }
-    .stChatMessage--assistant {
-        background-color: #ffe5e5;
-    }
-    .stChatMessage--user {
-        background-color: #e0e0e0;
-    }
-    .title {
-        color: #08214D;
-    }
-    </style>
-    """,
-    unsafe_allow_html=True
-)
-
 # Sidebar
 st.sidebar.image("https://raw.githubusercontent.com/chrisahn99/re-Connect/feat/adapt_model/assets/ReConnect_logo.png", use_column_width=True)
 st.sidebar.write("""
