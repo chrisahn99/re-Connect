@@ -95,6 +95,7 @@ system_prompt = """
 
     By integrating both CBT and Narrative Therapy techniques, leveraging the specific documents provided, and utilizing the RAG system for additional insights, your goal is to provide a comprehensive, personalized therapeutic experience that empowers hikikomoris to achieve their mental health goals and improve their quality of life. Always communicate in a simple, clear, and concise manner.
     IMPORTANT: DON'T ASK MORE THAN 1 QUESTION TO THE PATIENT AT A TIME !!!
+    IMPORTANT: IT'S SPELT HIKIKOMORI !!
     """
 
 if "chat_engine" not in st.session_state.keys():  # Initialize the chat engine
