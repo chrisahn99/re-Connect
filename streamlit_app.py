@@ -14,7 +14,7 @@ st.title("re:Connect, next gen AI therapist⚕️")
 st.info("Check out the full presentation pf this app in our [hackathon page](https://lablab.ai/event/llama-3-ai-hackathon/mirai/reconnect)", icon="📃")
 
 # Sidebar
-st.sidebar.image("https://raw.githubusercontent.com/chrisahn99/re-Connect/feat/adapt_model/assets/ReConnect_logo.png", use_column_width=True)
+st.sidebar.image("https://raw.githubusercontent.com/chrisahn99/re-Connect/feat/adapt_model/assets/ReConnect_logo.png", use_container_width=True)
 st.sidebar.write("""
 **re:Connect** is an innovative AI product aimed at revolutionizing mental health support. By leveraging the power of advanced AI modeling, **re:Connect**  specializes in two leading therapeutic frameworks: Cognitive Behavioral Therapy (CBT) and Narrative Therapy. These specializations enable the AI to provide empathetic and personalized responses, ensuring realistic and meaningful interactions.
 """)
