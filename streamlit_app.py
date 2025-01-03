@@ -50,7 +50,7 @@ def load_data():
         )
 
         milvus_store = MilvusVectorStore(
-            uri="https://raw.githubusercontent.com/chrisahn99/re-Connect/refs/heads/main/data/reconnect.db",
+            uri="./data/reconnect.db",
             dim=768
         )
 
