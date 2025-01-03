@@ -44,6 +44,13 @@ def load_data():
     with st.spinner(text="re:Connect is waking up – hang tight!"):
         conn = st.connection("milvus", type=MilvusConnection)
         st.info("Successfully connected to Milvus!")
+
+        collections_list = conn.list_collections()
+        for i, collection in enumerate(collections_list):
+            st.code(f"{i} {collection}")
+            
+        reconnect_db = conn.get_collection("reconnect_db")
+
         
         Settings.llm = TogetherLLM(
             model="meta-llama/Llama-3-70b-chat-hf",
