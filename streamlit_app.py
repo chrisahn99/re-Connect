@@ -50,7 +50,9 @@ def load_data():
         )
 
         milvus_store = MilvusVectorStore(
-            uri="./data/reconnect.db",
+            uri="https://in03-6baf5b40b2be0a9.serverless.gcp-us-west1.cloud.zilliz.com",
+            collection_name="reconnect_db",
+            token=st.secrets.milvus_key,
             dim=768
         )
 
