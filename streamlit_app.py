@@ -3,6 +3,8 @@ from llama_index.core import VectorStoreIndex, Settings
 from llama_index.llms.together import TogetherLLM
 from llama_index.embeddings.together import TogetherEmbedding
 from llama_index.vector_stores.milvus import MilvusVectorStore
+from st_milvus_connection import MilvusConnection
+import os
 
 # Set page config with title and favicon
 st.set_page_config(
@@ -33,11 +35,16 @@ if "messages" not in st.session_state.keys():  # Initialize the chat messages hi
             "content": "Hi I'm re:Connect! How are you feeling today?",
         }
     ]
+    
+os.environ["milvus_uri"] = "https://in03-6baf5b40b2be0a9.serverless.gcp-us-west1.cloud.zilliz.com"
+os.environ["milvus_token"] = st.secrets.milvus_key
 
 @st.cache_resource(show_spinner=False)
 def load_data():
     with st.spinner(text="re:Connect is waking up – hang tight!"):
-
+        conn = st.connection("milvus", type=MilvusConnection)
+        st.info("Successfully connected to Milvus!")
+        
         Settings.llm = TogetherLLM(
             model="meta-llama/Llama-3-70b-chat-hf",
             api_key=st.secrets.together_key
