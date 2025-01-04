@@ -2,7 +2,8 @@ import streamlit as st
 from llama_index.core import VectorStoreIndex, Settings
 from llama_index.llms.together import TogetherLLM
 from llama_index.embeddings.together import TogetherEmbedding
-from llama_index.vector_stores.milvus import MilvusVectorStore
+from llama_index.vector_stores.pinecone import PineconeVectorStore
+from pinecone import Pinecone
 import os
 
 # Set page config with title and favicon
@@ -48,15 +49,13 @@ def load_data():
             model_name="togethercomputer/m2-bert-80M-8k-retrieval",
             api_key= st.secrets.together_key
         )
+        
+        pc = Pinecone(api_key=st.secrets.pinecone_key)
+        pinecone_index = pc.Index("reconnect-db")
+        
+        pinecone_store = PineconeVectorStore(pinecone_index=pinecone_index)
 
-        milvus_store = MilvusVectorStore(
-            uri="https://in03-6baf5b40b2be0a9.serverless.gcp-us-west1.cloud.zilliz.com",
-            collection_name="reconnect_db",
-            token=st.secrets.milvus_key,
-            dim=768
-        )
-
-        vector_index = VectorStoreIndex.from_vector_store(vector_store=milvus_store)
+        vector_index = VectorStoreIndex.from_vector_store(vector_store=pinecone_store)
 
         return vector_index
 
