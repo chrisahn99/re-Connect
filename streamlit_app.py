@@ -13,7 +13,7 @@ st.set_page_config(
     layout="centered", initial_sidebar_state="auto", menu_items=None
 )
 st.title("re:Connect, next gen AI therapist⚕️")
-st.info("Check out the full presentation pf this app in our [hackathon page](https://lablab.ai/event/llama-3-ai-hackathon/mirai/reconnect)", icon="📃")
+st.info("Check out the full presentation of this app in our [hackathon page](https://lablab.ai/event/llama-3-ai-hackathon/mirai/reconnect) and [demo](https://youtu.be/Z7tYIjsD-B4?si=DSGLP1YqxRFw8gns)", icon="📃")
 
 # Sidebar
 st.sidebar.image("https://raw.githubusercontent.com/chrisahn99/re-Connect/feat/adapt_model/assets/ReConnect_logo.png", use_container_width=True)
