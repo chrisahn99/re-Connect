@@ -1,3 +1,28 @@
+import subprocess
+import sys
+
+def uninstall_deprecated_plugin():
+    try:
+        # Run the pip uninstall command
+        result = subprocess.run(
+            [sys.executable, "-m", "pip", "uninstall", "-y", "pinecone-plugin-inference"],
+            check=True,
+            stdout=subprocess.PIPE,
+            stderr=subprocess.PIPE,
+            text=True
+        )
+        print("Successfully uninstalled pinecone-plugin-inference:")
+        print(result.stdout)
+    except subprocess.CalledProcessError as e:
+        # If uninstall fails, log the error
+        print("Error uninstalling pinecone-plugin-inference:")
+        print(e.stderr)
+
+# Call the function before the rest of your app starts
+uninstall_deprecated_plugin()
+
+# The rest of your Streamlit app code follows here
+
 import streamlit as st
 from llama_index.core import VectorStoreIndex, Settings
 from llama_index.llms.together import TogetherLLM
