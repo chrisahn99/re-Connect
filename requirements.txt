@@ -7,5 +7,5 @@ pypdf
 llama-index-vector-stores-milvus
 llama-index-embeddings-together 
 llama-index-llms-together
-pinecone
+pinecone==6.0.0
 llama-index-vector-stores-pinecone
