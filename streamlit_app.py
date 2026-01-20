@@ -1,35 +1,9 @@
-import subprocess
-import sys
-
-def uninstall_deprecated_plugin():
-    try:
-        # Run the pip uninstall command
-        result = subprocess.run(
-            [sys.executable, "-m", "pip", "uninstall", "-y", "pinecone-plugin-inference"],
-            check=True,
-            stdout=subprocess.PIPE,
-            stderr=subprocess.PIPE,
-            text=True
-        )
-        print("Successfully uninstalled pinecone-plugin-inference:")
-        print(result.stdout)
-    except subprocess.CalledProcessError as e:
-        # If uninstall fails, log the error
-        print("Error uninstalling pinecone-plugin-inference:")
-        print(e.stderr)
-
-# Call the function before the rest of your app starts
-uninstall_deprecated_plugin()
-
-# The rest of your Streamlit app code follows here
-
 import streamlit as st
 from llama_index.core import VectorStoreIndex, Settings
 from llama_index.llms.together import TogetherLLM
 from llama_index.embeddings.together import TogetherEmbedding
-from llama_index.vector_stores.pinecone import PineconeVectorStore
-from pinecone import Pinecone
-import os
+from llama_index.vector_stores.milvus import MilvusVectorStore
+import asyncio
 
 # Set page config with title and favicon
 st.set_page_config(
@@ -61,28 +35,33 @@ if "messages" not in st.session_state.keys():  # Initialize the chat messages hi
         }
     ]
 
+async def _load_data_async():
+    Settings.llm = TogetherLLM(
+        model="meta-llama/Llama-3.3-70B-Instruct-Turbo",
+        api_key=st.secrets.together_key
+    )
+
+    Settings.embed_model = TogetherEmbedding(
+        model_name="togethercomputer/m2-bert-80M-32k-retrieval",
+        api_key=st.secrets.together_key
+    )
+
+    milvus_store = MilvusVectorStore(
+        uri=st.secrets.zilliz_uri,
+        collection_name="reconnect_db",
+        token=st.secrets.milvus_key,
+        dim=768
+    )
+
+    vector_index = VectorStoreIndex.from_vector_store(vector_store=milvus_store)
+
+    return vector_index
+
+
 @st.cache_resource(show_spinner=False)
 def load_data():
-    with st.spinner(text="re:Connect is waking up – hang tight!"):
-        
-        Settings.llm = TogetherLLM(
-            model="meta-llama/Llama-3-70b-chat-hf",
-            api_key=st.secrets.together_key
-        )
-
-        Settings.embed_model = TogetherEmbedding(
-            model_name="togethercomputer/m2-bert-80M-8k-retrieval",
-            api_key= st.secrets.together_key
-        )
-        
-        pc = Pinecone(api_key=st.secrets.pinecone_key)
-        pinecone_index = pc.Index("reconnect-db")
-        
-        pinecone_store = PineconeVectorStore(pinecone_index=pinecone_index)
-
-        vector_index = VectorStoreIndex.from_vector_store(vector_store=pinecone_store)
-
-        return vector_index
+    with st.spinner(text="re;Connect therapist will be here shortly - hang tight!"):
+        return asyncio.run(_load_data_async())
 
 
 index = load_data()
